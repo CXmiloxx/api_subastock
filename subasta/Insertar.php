@@ -7,7 +7,7 @@ if ($metodo == 'POST') {
     $contenido = trim(file_get_contents("php://input"));
     $datos = json_decode($contenido, true);
 
-    if (!empty($datos['idUsuario']) && !empty($datos['idAnimal']) && !empty($datos['pujaMinima']) && !empty($datos['fechaInicio']) && !empty($datos['fechaFin'])) {
+    if (isset($datos['idUsuario'], $datos['idAnimal'], $datos['pujaMinima'], $datos['fechaInicio'], $datos['fechaFin'])) {
         $idUsuario = $datos['idUsuario'];
         $idAnimal = $datos['idAnimal'];
         $pujaMinima = $datos['pujaMinima'];

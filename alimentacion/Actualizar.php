@@ -9,7 +9,7 @@ if ($metodo == 'PUT') {
     $contenido = trim(file_get_contents('php://input'));
     $datos = json_decode($contenido, true);
 
-    if (!empty($datos['idAlimentacion']) && !empty($datos['tipo_alimento']) && !empty($datos['cantidad'])) {
+    if ( isset ( $datos['idAlimentacion'], $datos['tipo_alimento'], $datos['cantidad'] ) ) {
         try {
             $alimentacionExiste = $base_de_datos->prepare("SELECT COUNT(*) FROM alimentacion WHERE idAlimentacion = ?");
             $alimentacionExiste->execute([$datos['idAlimentacion']]);

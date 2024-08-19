@@ -11,7 +11,7 @@
         $contenido = trim(file_get_contents('php://input'));
         $datos = json_decode($contenido,true);
 
-            if(!empty($datos['idFavorito']) && !empty($datos['idSubasta']) && !empty($datos['idFavorito']) ){
+            if( isset ( $datos['idFavorito'], $datos['idSubasta'], $datos['idFavorito'] ) ) {
                 $idFavorito = $datos['idFavorito'];
                 $idSubasta = $datos['idSubasta'];
                 $idFavorito = $datos['idFavorito'];

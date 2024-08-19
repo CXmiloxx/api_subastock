@@ -9,7 +9,7 @@ include './Config/Conexion.php';
         $contenido = trim(file_get_contents("php://input"));
         $datos = json_decode($contenido, true);
 
-        if (!empty($datos['idAnimal']) && !empty($datos['tipo_alimento']) && !empty($datos['cantidad'])) {
+        if ( isset ($datos['idAnimal'], $datos['tipo_alimento'], $datos['cantidad'] ) ) {
             $idAnimal = $datos['idAnimal'];
             $tipo_alimento = $datos['tipo_alimento'];
             $cantidad = $datos['cantidad'];

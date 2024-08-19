@@ -8,7 +8,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
         $contendido = trim(file_get_contents("php://input"));
         $datos = json_decode($contendido, true);
 
-        if(!empty($datos['idSubasta']) && !empty($datos['idUsuario'])){
+        if( isset ( $datos['idSubasta'], $datos['idUsuario'] ) ){
             $idSubasta = $datos['idSubasta'];
             $idUsuario = $datos['idUsuario'];
 

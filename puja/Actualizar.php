@@ -12,7 +12,7 @@
             $contenido = trim(file_get_contents("php://input"));
             $datos = json_decode($contenido, true);
 
-            if (!empty($datos['valor'])) {
+            if (isset($datos['valor'])) {
                 $valor = $datos['valor'];
 
                 try {

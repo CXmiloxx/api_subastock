@@ -11,7 +11,7 @@ if ($metodo === 'PUT') {
         $contenido = trim(file_get_contents("php://input"));
         $datos = json_decode($contenido, true);
 
-        if (!empty($datos['pujaMinima']) && !empty($datos['fechaInicio']) && !empty($datos['fechaFin'])) {
+        if (isset($datos['pujaMinima'], $datos['fechaInicio'], $datos['fechaFin'])) {
             $pujaMinima = $datos['pujaMinima'];
             $fechaInicio = $datos['fechaInicio'];
             $fechaFin = $datos['fechaFin'];

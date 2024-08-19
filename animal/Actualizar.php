@@ -12,7 +12,7 @@
         $contenido = trim(file_get_contents("php://input"));
         $datos = json_decode($contenido, true);
 
-        if (!empty($datos['idAnimal']) && !empty($datos['idUsuario']) && !empty($datos['marca']) && !empty($datos['raza']) && !empty($datos['especie'])) {
+        if (isset ( $datos['idAnimal'], $datos['idUsuario'], $datos['marca'],$datos['raza'], $datos['especie'] ) ) {
             $idAnimal = $datos['idAnimal'];
             $idUsuario = $datos['idUsuario'];
             $marca = $datos['marca'];

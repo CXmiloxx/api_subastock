@@ -8,7 +8,7 @@
         $contenido = trim(file_get_contents("php://input"));
         $datos = json_decode($contenido, true);
 
-        if (!empty($datos['correo']) && !empty($datos['contraseña'])) {
+        if (isset($datos['correo'], $datos['contraseña'])) {
             $correo = $datos['correo'];
             $contra = $datos['contraseña'];
 

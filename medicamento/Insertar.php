@@ -9,7 +9,7 @@ if ($metodo == 'POST') {
     $contenido = trim(file_get_contents("php://input"));
     $datos = json_decode($contenido, true);
 
-    if (!empty($datos['idAnimal']) && !empty($datos['nombre']) && !empty($datos['dosis'])) {
+    if ( isset ( $datos['idAnimal'], $datos['nombre'], $datos['dosis'] ) ) {
         $idAnimal = $datos['idAnimal'];
         $nombre = $datos['nombre'];
         $dosis = $datos['dosis'];

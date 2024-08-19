@@ -5,14 +5,14 @@
     $metodo = $_SERVER['REQUEST_METHOD'];
 
     if ($metodo == 'POST') {
-        $content = trim(file_get_contents("php://input"));
-        $decoded = json_decode($content, true);
+        $contenido = trim(file_get_contents("php://input"));
+        $datos = json_decode($contenido, true);
 
-        if (!empty($decoded['idUsuario']) && !empty($decoded['marca']) && !empty($decoded['raza']) && !empty($decoded['especie'])) {
-            $idUsuario = $decoded['idUsuario'];
-            $marca = $decoded['marca'];
-            $raza = $decoded['raza'];
-            $especie = $decoded['especie'];
+        if (isset ( $datos['idUsuario'], $datos['marca'], $datos['raza'], $datos['especie'] ) ) {
+            $idUsuario = $datos['idUsuario'];
+            $marca = $datos['marca'];
+            $raza = $datos['raza'];
+            $especie = $datos['especie'];
 
             try {
                 $consulta = $base_de_datos->prepare("INSERT INTO Animal (idUsuario, marca, raza, especie) VALUES (:idU, :mar, :raza, :esp)");

@@ -7,7 +7,7 @@ include './Config/Conexion.php';
         $contenido = trim(file_get_contents("php://input"));
         $datos = json_decode($contenido, true);
 
-        if (!empty($datos['nombres']) && !empty($datos['apellidos']) && !empty($datos['correo']) && !empty($datos['contraseña']) && !empty($datos['saldo']) && !empty($datos['telefono'])) {
+        if (isset($datos['nombres'], $datos['apellidos'], $datos['correo'], $datos['contraseña'], $datos['saldo'], $datos['telefono'])) {
             $nombre = $datos['nombres'];
             $apellido = $datos['apellidos'];
             $correo = $datos['correo'];

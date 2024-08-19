@@ -7,7 +7,7 @@ if ($metodo === 'POST') {
     $contenido = trim(file_get_contents("php://input"));
     $datos = json_decode($contenido, true);
 
-    if (!empty($datos['idSubasta']) && !empty($datos['idUsuario']) && !empty($datos['valor'])) {
+    if ( isset ( $datos['idSubasta'], $datos['idUsuario'], $datos['valor'] ) ) {
         $idSubasta = $datos['idSubasta'];
         $idUsuario = $datos['idUsuario'];
         $valor = $datos['valor'];

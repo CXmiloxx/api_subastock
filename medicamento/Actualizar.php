@@ -15,7 +15,7 @@
             $contenido = trim(file_get_contents("php://input"));
             $datos = json_decode($contenido, true);
 
-            if (!empty($datos['idMedicamento']) && !empty($datos['nombre']) && !empty($datos['dosis'])) {
+            if (isset ( $datos['idMedicamento'], $datos['nombre'], $datos['dosis'] ) ) {
                 $idMedicamento = $datos['idMedicamento'];
                 $nombre = $datos['nombre'];
                 $dosis = $datos['dosis'];
