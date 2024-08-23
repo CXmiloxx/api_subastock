@@ -15,7 +15,7 @@
             $especie = $datos['especie'];
 
             try {
-                $consulta = $base_de_datos->prepare("INSERT INTO Animal (idUsuario, marca, raza, especie) VALUES (:idU, :mar, :raza, :esp)");
+                $consulta = $base_de_datos->prepare("INSERT INTO animal (idUsuario, marca, raza, especie) VALUES (:idU, :mar, :raza, :esp)");
                 $consulta->bindParam(':idU', $idUsuario);
                 $consulta->bindParam(':mar', $marca);
                 $consulta->bindParam(':raza', $raza);

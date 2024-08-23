@@ -11,7 +11,7 @@ if ($metodo == 'DELETE') {
     if ($idAnimal) {
 
         try {
-            $consulta = $base_de_datos->prepare("DELETE FROM Animal WHERE idAnimal = ?");
+            $consulta = $base_de_datos->prepare("DELETE FROM animal WHERE idAnimal = ?");
             $proceso = $consulta->execute([$idAnimal]);
 
             if ($proceso && $consulta->rowCount() != 0) {

@@ -16,7 +16,7 @@ if ($metodo == 'POST') {
 
 
         try {
-            $consulta = $base_de_datos->prepare("INSERT INTO medicamento(idAnimal, nombre, dosis, fecha) VALUES(:idAn, :nom, :dos, NOW())");
+            $consulta = $base_de_datos->prepare("INSERT INTO medicamento (idAnimal, nombre, dosis, fecha) VALUES(:idAn, :nom, :dos, NOW())");
             $consulta->bindParam(':idAn', $idAnimal);
             $consulta->bindParam(':nom', $nombre);
             $consulta->bindParam(':dos', $dosis);

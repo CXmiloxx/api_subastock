@@ -16,7 +16,7 @@
                 $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
 
                 if ($resultado) {
-                    $respuesta = formatearRespuesta(true, "Usuario encontrado exitosamente.", ['animal' => $resultado]);
+                    $respuesta = formatearRespuesta(true, "Animal encontrado exitosamente.", ['animal' => $resultado]);
                 } else {
                     $respuesta = formatearRespuesta(false, "No se encontró ningún animal con el ID especificado.");
                 }

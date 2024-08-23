@@ -1,65 +1,51 @@
 <?php
 
-include './Config/Conexion.php';
+    include './Config/Conexion.php';
+    $metodo = $_SERVER['REQUEST_METHOD'];
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $segmentos_uri = explode('/', $uri);
+    $idAlimentacion = isset($segmentos_uri[3]) && is_numeric($segmentos_uri[3]) ? $segmentos_uri[3] : null;
 
-$metodo = $_SERVER['REQUEST_METHOD'];
 
-if ($metodo == 'PUT') {
+    if ($metodo == 'PUT') {
 
-    $contenido = trim(file_get_contents('php://input'));
-    $datos = json_decode($contenido, true);
+        if ($idAlimentacion) {
+            $contenido = trim(file_get_contents('php://input'));
+            $datos = json_decode($contenido, true);
 
-    if ( isset ( $datos['idAlimentacion'], $datos['tipo_alimento'], $datos['cantidad'] ) ) {
-        try {
-            $alimentacionExiste = $base_de_datos->prepare("SELECT COUNT(*) FROM alimentacion WHERE idAlimentacion = ?");
-            $alimentacionExiste->execute([$datos['idAlimentacion']]);
-            $existe = $alimentacionExiste->fetchColumn();
+            if (isset($datos['tipo_alimento'], $datos['cantidad'])) {
+                $tipo_alimento = $datos['tipo_alimento'];
+                $cantidad = $datos['cantidad'];
 
-            if ($existe) {
-                $consulta = $base_de_datos->prepare("UPDATE alimentacion SET tipo_alimento = :tAli, cantidad = :can WHERE idAlimentacion = :idAli");
-                $consulta->bindParam(':tAli', $datos['tipo_alimento']);
-                $consulta->bindParam(':can', $datos['cantidad']);
-                $consulta->bindParam(':idAli', $datos['idAlimentacion']);
-                $proceso = $consulta->execute();
+                try {
+                    $alimentacionExiste = $base_de_datos->prepare("SELECT COUNT(*) FROM alimentacion WHERE idAlimentacion = ?");
+                    $alimentacionExiste->execute([$idAlimentacion]);
 
-                if ($proceso) {
-                    $respuesta = [
-                        'status' => true,
-                        'message' => "La alimentación se ha actualizado correctamente."
-                    ];
-                } else {
-                    $respuesta = [
-                        'status' => false,
-                        'message' => "Hubo un error al intentar actualizar la alimentación."
-                    ];
+                    if ($alimentacionExiste-> fetchColumn()) {
+                        $consulta = $base_de_datos->prepare("UPDATE alimentacion SET tipo_alimento = :tAli, cantidad = :can WHERE idAlimentacion = :idAli");
+                        $consulta->bindParam(':tAli', $tipo_alimento);
+                        $consulta->bindParam(':can', $cantidad);
+                        $proceso = $consulta->execute();
+
+                        if ($proceso && $consulta->rowCount()) {
+                            $respuesta = formatearRespuesta(true, "Alimentacion actualizado correctamente.");
+                        } else {
+                            $respuesta = formatearRespuesta(false, "No se pudo actualizar la alimentacion del animal. Verifica los datos y vuelve a intentarlo.");
+                        }
+                    } else {
+                        $respuesta = formatearRespuesta(false, "La alimentacion con el ID especificado no existe.");
+                    }
+                } catch (Exception $e) {
+                    $respuesta = formatearRespuesta(false, "Error en la consulta SQL: ". $e->getMessage());
                 }
             } else {
-                $respuesta = [
-                    'status' => false,
-                    'message' => "La alimentación con el ID especificado no existe."
-                ];
+                $respuesta = formatearRespuesta(false, "Datos incompletos o inválidos. Asegúrate de enviar todos los campos requeridos.");
             }
-        } catch (Exception $e) {
-            $respuesta = [
-                'status' => false,
-                'message' => "Error en la consulta SQL.",
-                'exception' => $e->getMessage()
-            ];
+        } else {
+            $respuesta = formatearRespuesta(false, "Debe especificar un ID de usuario en la ruta.");
         }
-    } else {
-        $respuesta = [
-            'status' => false,
-            'message' => "Los datos enviados en la solicitud son inválidos o incompletos."
-        ];
     }
-} else {
-    $respuesta = [
-        'status' => false,
-        'message' => "Método de solicitud no permitido. Se esperaba PUT."
-    ];
-}
 
-header('Content-Type: application/json');
-echo json_encode($respuesta);
-
+    header('Content-Type: application/json');
+    echo json_encode($respuesta);
 ?>

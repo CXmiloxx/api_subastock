@@ -25,7 +25,7 @@
                 $existe = $animalExiste->fetchColumn();
 
                 if($existe){
-                    $consulta = $base_de_datos->prepare("UPDATE Animal SET idUsuario = :idU, marca = :mar, raza = :raza, especie = :esp WHERE idAnimal = :idA");
+                    $consulta = $base_de_datos->prepare("UPDATE animal SET idUsuario = :idU, marca = :mar, raza = :raza, especie = :esp WHERE idAnimal = :idA");
                     $consulta->bindParam(':idA', $idAnimal);
                     $consulta->bindParam(':idU', $idUsuario);
                     $consulta->bindParam(':mar', $marca);
