@@ -19,16 +19,18 @@
                 $idMedicamento = $datos['idMedicamento'];
                 $nombre = $datos['nombre'];
                 $dosis = $datos['dosis'];
+                $fecha_actual = date('Y-m-d H:i:s');
                 
             try {
                 $medicamentoExiste = $base_de_datos->prepare("SELECT COUNT(*) FROM medicamento WHERE idMedicamento = ?");
                 $medicamentoExiste->execute([$idMedicamento]);
 
                 if ( $medicamentoExiste->fetchColumn() ) {
-                    $consulta = $base_de_datos->prepare("UPDATE medicamento SET nombre = :nom, dosis = :dos, fecha = NOW() WHERE idMedicamento = :idM");
+                    $consulta = $base_de_datos->prepare("UPDATE medicamento SET nombre = :nom, dosis = :dos, fecha = :fec WHERE idMedicamento = :idM");
                     $consulta->bindParam(':idM', $idMedicamento);
                     $consulta->bindParam(':nom', $nombre);
                     $consulta->bindParam(':dos', $dosis);
+                    $consulta->bindParam(':fec', $fecha_actual);
                     $proceso = $consulta->execute();
 
                     if ($proceso && $consulta->rowCount() ) {

@@ -13,13 +13,15 @@
             $idAnimal = $datos['idAnimal'];
             $peso = $datos['peso'];
             $estado = $datos['estado'];
+            $fecha_actual = date('Y-m-d H:i:s');
 
 
             try {
-                $consulta = $base_de_datos->prepare("INSERT INTO estado_salud (idAnimal, peso, estado, fecha) VALUES(:idAn, :pes, :est, NOW() )");
+                $consulta = $base_de_datos->prepare("INSERT INTO estado_salud (idAnimal, peso, estado, fecha) VALUES(:idAn, :pes, :est, :fec)");
                 $consulta->bindParam(':idAn', $idAnimal);
                 $consulta->bindParam(':pes', $peso);
                 $consulta->bindParam(':est', $estado);
+                $consulta->bindParam(':fec', $fecha_actual);
                 $proceso = $consulta->execute();
 
                 if ($proceso) {

@@ -15,13 +15,14 @@
             if ( isset ( $datos['peso'], $datos['estado'] ) ) {
                 $peso = $datos['peso'];
                 $estado = $datos['estado'];
+                $fecha_actual = date('Y-m-d H:i:s');
 
                 try {
-                    $consulta = $base_de_datos->prepare("UPDATE estado_salud SET peso = :peso, estado = :estado, fecha = NOW() WHERE idEstado_Salud = :idEstado_Salud");
-                    $consulta->bindParam(':peso', $peso);
-                    $consulta->bindParam(':estado', $estado);
-                    $consulta->bindParam(':idEstado_Salud', $idEstado_Salud);
-
+                    $consulta = $base_de_datos->prepare("UPDATE estado_salud SET peso = :pes, estado = :est, fecha = :fec WHERE idEstado_Salud = :idES");
+                    $consulta->bindParam(':pes', $peso);
+                    $consulta->bindParam(':est', $estado);
+                    $consulta->bindParam(':fec', $fecha_actual);
+                    $consulta->bindParam(':ides', $idEstado_Salud);
                     $proceso = $consulta->execute();
 
                     if ($proceso && $consulta->rowCount()) {

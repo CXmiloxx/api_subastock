@@ -13,13 +13,15 @@ if ($metodo == 'POST') {
         $idAnimal = $datos['idAnimal'];
         $nombre = $datos['nombre'];
         $dosis = $datos['dosis'];
+        $fecha_actual = date('Y-m-d H:i:s');
 
 
         try {
-            $consulta = $base_de_datos->prepare("INSERT INTO medicamento (idAnimal, nombre, dosis, fecha) VALUES(:idAn, :nom, :dos, NOW())");
+            $consulta = $base_de_datos->prepare("INSERT INTO medicamento (idAnimal, nombre, dosis, fecha) VALUES(:idAn, :nom, :dos, :fec)");
             $consulta->bindParam(':idAn', $idAnimal);
             $consulta->bindParam(':nom', $nombre);
             $consulta->bindParam(':dos', $dosis);
+            $consulta->bindParam(':fec', $fecha_actual);
             $proceso = $consulta->execute();
 
             if ($proceso) {
