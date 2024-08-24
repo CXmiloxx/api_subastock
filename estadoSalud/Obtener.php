@@ -4,20 +4,20 @@
 
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $segmentos_uri = explode('/', $uri);
-    $idEstado_Salud = isset($segmentos_uri[3]) && is_numeric($segmentos_uri[3]) ? $segmentos_uri[3] : null;
+    $idAnimal = isset($segmentos_uri[3]) && is_numeric($segmentos_uri[3]) ? $segmentos_uri[3] : null;
     $metodo = $_SERVER['REQUEST_METHOD'];
 
 
     if ($metodo === 'GET') {
         try {
-            if ($idEstado_Salud) {
+            if ($idAnimal) {
 
-                $consulta = $base_de_datos->prepare("SELECT idEstado_Salud, peso,estado FROM estado_salud WHERE idEstado_Salud = ?");
-                $consulta->execute([$idEstado_Salud]);
-                $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+                $consulta = $base_de_datos->prepare("SELECT * FROM estado_salud WHERE idAnimal = ?");
+                $consulta->execute([$idAnimal]);
+                $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
                 if ($resultado) {
-                    $respuesta = formatearRespuesta(true, "Estados de Salud obtenidos correctamente.", ['Estado_Salud' => $resultado]);
+                    $respuesta = formatearRespuesta(true, "Estados de Salud obtenidos correctamente.", ['estadoSalud' => $resultado]);
                 } else {
                     $respuesta = formatearRespuesta(false, "No se encontraron estados de salud para el ID de animal especificado.");
                 }
