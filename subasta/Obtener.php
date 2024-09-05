@@ -30,6 +30,9 @@ if ($metodo === 'GET') {
     $respuesta = formatearRespuesta(false, "Método de solicitud no permitido. Se esperaba GET.");
 }
 
-header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+header("Content-Type: application/json");
 echo json_encode($respuesta);
 ?>
