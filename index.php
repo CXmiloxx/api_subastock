@@ -14,53 +14,53 @@ if (empty($resource)) {
         'detalles' => [
 
             'usuario' => [
-                'UrlObtener' => 'http://localhost:8000/usuario/Obtener',
-                'UrlInsertar' => 'http://localhost:8000/usuario/Insertar',
-                'UrlActualizar' => 'http://localhost:8000/usuario/Actualizar',
-                'UrlEliminar' => 'http://localhost:8000/usuario/Eliminar',
-                'UrlLogin' => 'http://localhost:8000/usuario/Login',
+                'UrlObtener' => 'https://apisubastock.cleverapps.io/usuario/Obtener',
+                'UrlInsertar' => 'https://apisubastock.cleverapps.io/usuario/Insertar',
+                'UrlActualizar' => 'https://apisubastock.cleverapps.io/usuario/Actualizar',
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/usuario/Eliminar',
+                'UrlLogin' => 'https://apisubastock.cleverapps.io/usuario/Login',
             ],
             'puja' =>[
-                'UrlObtener' => 'http://localhost:8000/puja/Obtener',
-                'UrlInsertar' => 'http://localhost:8000/puja/Insertar',
-                'UrlActualizar' => 'http://localhost:8000/puja/Actualizar',
-                'UrlEliminar' => 'http://localhost:8000/puja/Eliminar'
+                'UrlObtener' => 'https://apisubastock.cleverapps.io/puja/Obtener',
+                'UrlInsertar' => 'https://apisubastock.cleverapps.io/puja/Insertar',
+                'UrlActualizar' => 'https://apisubastock.cleverapps.io/puja/Actualizar',
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/puja/Eliminar'
             ],
             'animal' =>[
-                'UrlObtener' => 'http://localhost:8000/animal/Obtener',
-                'UrlInsertar' => 'http://localhost:8000/animal/Insertar',
-                'UrlActualizar' => 'http://localhost:8000/animal/Actualizar',
-                'UrlEliminar' => 'http://localhost:8000/animal/Eliminar'
+                'UrlObtener' => 'https://apisubastock.cleverapps.io/animal/Obtener',
+                'UrlInsertar' => 'https://apisubastock.cleverapps.io/animal/Insertar',
+                'UrlActualizar' => 'https://apisubastock.cleverapps.io/animal/Actualizar',
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/animal/Eliminar'
             ],
             'medicamento' =>[
-                'UrlObtener' => 'http://localhost:8000/medicamento/Obtener',
-                'UrlInsertar' => 'http://localhost:8000/medicamento/Insertar',
-                'UrlActualizar' => 'http://localhost:8000/medicamento/Actualizar',
-                'UrlEliminar' => 'http://localhost:8000/medicamento/Eliminar'
+                'UrlObtener' => 'https://apisubastock.cleverapps.io/medicamento/Obtener',
+                'UrlInsertar' => 'https://apisubastock.cleverapps.io/medicamento/Insertar',
+                'UrlActualizar' => 'https://apisubastock.cleverapps.io/medicamento/Actualizar',
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/medicamento/Eliminar'
             ],
             'favorito' =>[
-                'UrlObtener' => 'http://localhost:8000/favorito/Obtener',
-                'UrlInsertar' => 'http://localhost:8000/favorito/Insertar',
-                'UrlActualizar' => 'http://localhost:8000/favorito/Actualizar',
-                'UrlEliminar' => 'http://localhost:8000/favorito/Eliminar'
+                'UrlObtener' => 'https://apisubastock.cleverapps.io/favorito/Obtener',
+                'UrlInsertar' => 'https://apisubastock.cleverapps.io/favorito/Insertar',
+                'UrlActualizar' => 'https://apisubastock.cleverapps.io/favorito/Actualizar',
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/favorito/Eliminar'
             ],
             'alimentacion' =>[
-                'UrlObtener' => 'http://localhost:8000/alimentacion/Obtener',
-                'UrlInsertar' => 'http://localhost:8000/alimentacion/Insertar',
-                'UrlActualizar' => 'http://localhost:8000/alimentacion/Actualizar',
-                'UrlEliminar' => 'http://localhost:8000/alimentacion/Eliminar'
+                'UrlObtener' => 'https://apisubastock.cleverapps.io/alimentacion/Obtener',
+                'UrlInsertar' => 'https://apisubastock.cleverapps.io/alimentacion/Insertar',
+                'UrlActualizar' => 'https://apisubastock.cleverapps.io/alimentacion/Actualizar',
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/alimentacion/Eliminar'
             ],
             'subasta' =>[
-                'UrlObtener' => 'http://localhost:8000/subasta/Obtener',
-                'UrlInsertar' => 'http://localhost:8000/subasta/Insertar',
-                'UrlActualizar' => 'http://localhost:8000/subasta/Actualizar',
-                'UrlEliminar' => 'http://localhost:8000/subasta/Eliminar'
+                'UrlObtener' => 'https://apisubastock.cleverapps.io/subasta/Obtener',
+                'UrlInsertar' => 'https://apisubastock.cleverapps.io/subasta/Insertar',
+                'UrlActualizar' => 'https://apisubastock.cleverapps.io/subasta/Actualizar',
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/subasta/Eliminar'
             ],
             'EstadoSalud' => [
-                'UrlObtener' => 'http://localhost:8000/estadoSalud/Obtener',
-                'UrlInsertar' => 'http://localhost:8000/estadoSalud/Insertar',
-                'UrlActualizar' => 'http://localhost:8000/estadoSalud/Actualizar',
-                'UrlEliminar' => 'http://localhost:8000/estadoSalud/Eliminar'
+                'UrlObtener' => 'https://apisubastock.cleverapps.io/estadoSalud/Obtener',
+                'UrlInsertar' => 'https://apisubastock.cleverapps.io/estadoSalud/Insertar',
+                'UrlActualizar' => 'https://apisubastock.cleverapps.io/estadoSalud/Actualizar',
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/estadoSalud/Eliminar'
             ]
         ]
     ]);
