@@ -54,7 +54,8 @@ if (empty($resource)) {
                 'UrlObtener' => 'https://apisubastock.cleverapps.io/subasta/Obtener',
                 'UrlInsertar' => 'https://apisubastock.cleverapps.io/subasta/Insertar',
                 'UrlActualizar' => 'https://apisubastock.cleverapps.io/subasta/Actualizar',
-                'UrlEliminar' => 'https://apisubastock.cleverapps.io/subasta/Eliminar'
+                'UrlEliminar' => 'https://apisubastock.cleverapps.io/subasta/Eliminar',
+                'urlUsuarioPujador' => 'https://apisubastock.cleverapps.io/subasta/PujasPorAnimal'
             ],
             'EstadoSalud' => [
                 'UrlObtener' => 'https://apisubastock.cleverapps.io/estadoSalud/Obtener',
