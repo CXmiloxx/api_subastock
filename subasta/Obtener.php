@@ -19,9 +19,29 @@ if ($metodo === 'GET') {
                 $respuesta = formatearRespuesta(false, "No se encontró ninguna subasta con el ID especificado.");
             }
         } else {
-            $consulta = $base_de_datos->query("SELECT * FROM subasta");
+            $limit = isset($_GET['limit']) && is_numeric($_GET['limit']) ? intval($_GET['limit']) : 24;
+            $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+            $search = isset($_GET['search']) ? $_GET['search'] : '';
+            $offset = ($page - 1) * $limit;
+
+            $totalQuery = $base_de_datos->prepare("SELECT COUNT(*) as total FROM subasta WHERE tituloSubasta LIKE ?");
+            $totalQuery->bindValue(1, "%$search%", PDO::PARAM_STR);
+            $totalQuery->execute();
+            $totalResultados = $totalQuery->fetch(PDO::FETCH_ASSOC)['total'];
+            $totalPaginas = ceil($totalResultados / $limit);
+
+            $consulta = $base_de_datos->prepare("SELECT * FROM subasta WHERE tituloSubasta LIKE ? LIMIT ? OFFSET ?");
+            $consulta->bindValue(1, "%$search%", PDO::PARAM_STR);
+            $consulta->bindValue(2, $limit, PDO::PARAM_INT);
+            $consulta->bindValue(3, $offset, PDO::PARAM_INT);
+            $consulta->execute();
+
             $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
-            $respuesta = formatearRespuesta(true, "Subastas obtenidas correctamente.", ['subastas' => $resultado]);
+            $respuesta = formatearRespuesta(true, "Subastas obtenidas correctamente.", [
+                'subastas' => $resultado,
+                'totalPaginas' => $totalPaginas,
+                'paginaActual' => $page
+            ]);   
         }
     } catch (Exception $e) {
         $respuesta = formatearRespuesta(false, "Error en la consulta SQL: " . $e->getMessage());
