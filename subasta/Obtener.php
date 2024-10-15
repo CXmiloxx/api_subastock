@@ -9,12 +9,21 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 if ($metodo === 'GET') {
     try {
         if ($idSubasta) {
-            $consulta = $base_de_datos->prepare("SELECT * FROM subasta WHERE idSubasta = ?");
-            $consulta->execute([$idSubasta]);
-            $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+            $consultaSubasta = $base_de_datos->prepare("SELECT * FROM subasta WHERE idSubasta = ?");
+            $consultaSubasta->execute([$idSubasta]);
+            $subasta = $consultaSubasta->fetch(PDO::FETCH_ASSOC);
             
-            if ($resultado) {
-                $respuesta = formatearRespuesta(true, "Subasta encontrada exitosamente.", ['subasta' => $resultado]);
+            if ($subasta) {
+                $consultaPujaMaxima = $base_de_datos->prepare("SELECT MAX(valor) as pujaMaxima FROM puja WHERE idSubasta = ?");
+                $consultaPujaMaxima->execute([$idSubasta]);
+                $pujaMaxima = $consultaPujaMaxima->fetch(PDO::FETCH_ASSOC)['pujaMaxima'];
+
+                $valorActual = $pujaMaxima ? $pujaMaxima : $subasta['pujaMinima'];
+
+                $respuesta = formatearRespuesta(true, "Subasta encontrada exitosamente.", [
+                    'subasta' => $subasta,
+                    'valorActual' => $valorActual, 
+                ]);
             } else {
                 $respuesta = formatearRespuesta(false, "No se encontró ninguna subasta con el ID especificado.");
             }
