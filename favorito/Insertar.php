@@ -13,7 +13,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
             $idUsuario = $datos['idUsuario'];
 
             try{
-                $consulta = $base_de_datos->prepare("INSERT INTO favorito (idSubasta, idUsuario) VALUES (:idS, : idU)");
+                $consulta = $base_de_datos->prepare("INSERT INTO favorito (idSubasta, idUsuario) VALUES (:idS, :idU)");
                 $consulta->bindParam(':idS', $idSubasta);
                 $consulta->bindParam(':idU', $idUsuario);
                 $proceso = $consulta->execute();
