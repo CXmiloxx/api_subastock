@@ -1,6 +1,7 @@
 <?php
 
     include './Config/Conexion.php';
+    include './Config/Token.php';
 
     $metodo = $_SERVER['REQUEST_METHOD'];
 
@@ -20,7 +21,8 @@
 
                 if ($usuario) {
                     if (password_verify($contra, $usuario['contraseña'])) {
-                        $respuesta = formatearRespuesta(true, 'Login exitoso', ['idUsuario' => $usuario['idUsuario']]);
+                        $token = Token::createToken($correo, $usuario['idUsuario']);
+                        $respuesta = formatearRespuesta(true, 'Login exitoso', ["token" => $token]);
 
                     } else {
                         $respuesta = formatearRespuesta(false, 'Contraseña incorrecta');
