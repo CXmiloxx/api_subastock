@@ -7,14 +7,14 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 if ($metodo === 'POST') {
     $contenido = trim(file_get_contents("php://input"));
     $datos = json_decode($contenido, true);
+    $headers = apache_request_headers();
 
-    // Verificar si el token es válido
-    if (isset($datos['token'])) {
-        $token = $datos['token'];
+    if (isset($headers['Authorization'])) {
+        $token = $headers['Authorization'];
         $decodedToken = Token::validateToken($token);
 
         if ($decodedToken['valid']) {
-            $respuesta = formatearRespuesta(true, 'Token válido',  ["data" => $decodedToken['data']]);
+            $respuesta = formatearRespuesta(true, 'Token válido',  ["data" => ["email" => $decodedToken['email'], "id" => $decodedToken['id']]]);
         } else {
             $respuesta = formatearRespuesta(false, 'Token inválido');
         }
