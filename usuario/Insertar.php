@@ -1,5 +1,5 @@
 <?php
-include './Config/Conexion.php';
+include '../Config/Conexion.php';
 
     $metodo = $_SERVER['REQUEST_METHOD'];
 

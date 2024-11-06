@@ -1,5 +1,6 @@
 {
     "require": {
-        "cloudinary/cloudinary_php": "^2.14"
+        "cloudinary/cloudinary_php": "^2.14",
+        "firebase/php-jwt": "^6.10"
     }
 }
