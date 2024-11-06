@@ -1,19 +1,23 @@
 <?php
 
 include './Config/Conexion.php';
+include './Config/Token.php';
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 
 if ($metodo == 'POST') {
     $contenido = trim(file_get_contents("php://input"));
     $datos = json_decode($contenido, true);
+    $headers = apache_request_headers();
+    $token = $headers['Authorization'];
+    $tokenDesencriptado = Token::validateToken($token);
 
-    if (isset($datos['idUsuario'], $datos['marca'], $datos['raza'], $datos['especie'])) {
-        $idUsuario = $datos['idUsuario'];
+
+    if ($tokenDesencriptado['valid'] && isset($datos['marca'], $datos['raza'], $datos['especie'])) {
+        $idUsuario = $tokenDesencriptado['id'];
         $marca = $datos['marca'];
         $raza = $datos['raza'];
         $especie = $datos['especie'];
-
         try {
             $marcaExistente = $base_de_datos->prepare('
                 SELECT COUNT(*)
@@ -51,7 +55,7 @@ if ($metodo == 'POST') {
         }
 
     } else {
-        $respuesta = formatearRespuesta(false, "Datos incompletos o inválidos. Asegúrate de enviar todos los campos requeridos.");
+        $respuesta = formatearRespuesta(false, "Datos incompletos o inválidos. Asegúrate de enviar todos los campos requeridos. ");
     }
 } else {
     $respuesta = formatearRespuesta(false, "Método de solicitud no permitido. Se esperaba POST.");
