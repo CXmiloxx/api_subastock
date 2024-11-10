@@ -1,19 +1,15 @@
 <?php
 require 'vendor/autoload.php';
-use Dotenv\Dotenv;
 
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
-
-$servidor = $_ENV['DB_HOST'];
-$usuario = $_ENV['DB_USER'];
-$contrasena = $_ENV['DB_PASSWORD'];
-$nombre_de_base = $_ENV['DB_NAME'];
+$servidor ='bgpya0xdu9u1yly2o1zd-mysql.services.clever-cloud.com';
+$usuario = 'utpggc1aogkjxm5e';
+$contrasena = 'VYEI22CEm4gJjydABUdn';
+$nombre_de_base = 'bgpya0xdu9u1yly2o1zd';
 
 try {
     $base_de_datos = new PDO("mysql:host=$servidor;dbname=$nombre_de_base", $usuario, $contrasena);
