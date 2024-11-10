@@ -1,16 +1,22 @@
 <?php
+require 'vendor/autoload.php';
+use Dotenv\Dotenv;
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$servidor = "bnaeekziwkjztwyojaoc-mysql.services.clever-cloud.com";
-$usuario = "u3dybgxofmextrb0";
-$contrasena = "fHdS3lRqkdKdP7vvSyXa";
-$nombre_de_base = "bnaeekziwkjztwyojaoc";
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+$servidor = $_ENV['DB_HOST'];
+$usuario = $_ENV['DB_USER'];
+$contrasena = $_ENV['DB_PASSWORD'];
+$nombre_de_base = $_ENV['DB_NAME'];
 
 try {
-    $base_de_datos = new PDO("mysql:host=$servidor; dbname=$nombre_de_base", $usuario, $contrasena);
+    $base_de_datos = new PDO("mysql:host=$servidor;dbname=$nombre_de_base", $usuario, $contrasena);
     $base_de_datos->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (Exception $e) {
     echo json_encode(formatearRespuesta(false, "Error al conectar con la base de datos: " . $e->getMessage()));
@@ -23,7 +29,7 @@ function formatearRespuesta($status, $mensaje, $datos = null) {
         'message' => $mensaje
     ];
     if ($datos !== null) {
-        $respuesta = array_merge($respuesta, $datos);
+        $respuesta['data'] = $datos;
     }
     return $respuesta;
 }
