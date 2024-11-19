@@ -9,7 +9,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 if ($metodo === 'GET') {
     try {
         if ($idSubasta) {
-            $consultaSubasta = $base_de_datos->prepare("SELECT * FROM subasta WHERE idSubasta = ?");
+            $consultaSubasta = $base_de_datos->prepare("SELECT * FROM subasta WHERE idSubasta = ? AND fechaFin >= NOW()");
             $consultaSubasta->execute([$idSubasta]);
             $subasta = $consultaSubasta->fetch(PDO::FETCH_ASSOC);
             
@@ -39,7 +39,7 @@ if ($metodo === 'GET') {
             $totalResultados = $totalQuery->fetch(PDO::FETCH_ASSOC)['total'];
             $totalPaginas = ceil($totalResultados / $limit);
 
-            $consulta = $base_de_datos->prepare("SELECT * FROM subasta WHERE tituloSubasta LIKE ? LIMIT ? OFFSET ?");
+            $consulta = $base_de_datos->prepare("SELECT * FROM subasta WHERE tituloSubasta LIKE ? AND fechaFin >= NOW() LIMIT ? OFFSET ?");
             $consulta->bindValue(1, "%$search%", PDO::PARAM_STR);
             $consulta->bindValue(2, $limit, PDO::PARAM_INT);
             $consulta->bindValue(3, $offset, PDO::PARAM_INT);
