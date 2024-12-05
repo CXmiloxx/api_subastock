@@ -2,60 +2,48 @@
 
 include './Config/Conexion.php';
 
-// Configuración CORS para aceptar solicitudes desde el frontend
-header("Access-Control-Allow-Origin: http://localhost:5173"); // Cambia el dominio si es necesario
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-
-// Manejo de preflight (OPTIONS)
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(204); // Sin contenido
-    exit();
-}
-
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $metodo = $_SERVER['REQUEST_METHOD'];
 
 if ($metodo === 'POST') {
     $contenido = trim(file_get_contents("php://input"));
     $data = json_decode($contenido, true);
 
-    // Validar datos enviados desde el frontend
-    if (isset($data['contraseñaActual'], $data['nuevaContraseña'], $data['correo'])) {
+    // Verificar que se reciban los datos necesarios
+    if (isset($data['correo'], $data['contraseña'])) {
         $correo = $data['correo'];
-        $contraseñaActual = $data['contraseñaActual'];
-        $nuevaContraseña = $data['nuevaContraseña'];
-        $nuevaContraseñaHash = password_hash($nuevaContraseña, PASSWORD_BCRYPT);
+        $contrasena = $data['contraseña'];
+        $contrasenaHash = password_hash($contrasena, PASSWORD_BCRYPT);
 
         try {
-            // Verificar la contraseña actual en la base de datos
-            $consulta = $base_de_datos->prepare("SELECT contraseña FROM usuario WHERE correo = :correo");
-            $consulta->bindParam(':correo', $correo);
-            $consulta->execute();
-            $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
+            // Actualizar la contraseña para el correo especificado
+            $consulta = $base_de_datos->prepare("UPDATE usuario SET contraseña = :con WHERE correo = :ema");
+            $consulta->bindParam(':con', $contrasenaHash);
+            $consulta->bindParam(':ema', $correo);
+            $proceso = $consulta->execute();
 
-            if ($usuario && password_verify($contraseñaActual, $usuario['contraseña'])) {
-                // Actualizar la contraseña
-                $actualizar = $base_de_datos->prepare("UPDATE usuario SET contraseña = :nueva WHERE correo = :correo");
-                $actualizar->bindParam(':nueva', $nuevaContraseñaHash);
-                $actualizar->bindParam(':correo', $correo);
-                $actualizar->execute();
-
-                if ($actualizar->rowCount() > 0) {
-                    echo json_encode(["success" => true, "message" => "Contraseña actualizada correctamente."]);
-                } else {
-                    echo json_encode(["success" => false, "message" => "No se pudo actualizar la contraseña."]);
-                }
+            if ($proceso && $consulta->rowCount() > 0) {
+                $respuesta = formatearRespuesta(true, "Contraseña actualizada correctamente.");
             } else {
-                echo json_encode(["success" => false, "message" => "La contraseña actual no es correcta."]);
+                $respuesta = formatearRespuesta(false, "No se pudo actualizar la contraseña. Verifica los datos.");
             }
         } catch (Exception $e) {
-            echo json_encode(["success" => false, "message" => "Error en el servidor: " . $e->getMessage()]);
+            $respuesta = formatearRespuesta(false, "Error en la consulta SQL: " . $e->getMessage());
         }
     } else {
-        echo json_encode(["success" => false, "message" => "Datos incompletos o inválidos."]);
+        $respuesta = formatearRespuesta(false, "Datos incompletos o inválidos.");
     }
 } else {
-    echo json_encode(["success" => false, "message" => "Método no permitido."]);
+    $respuesta = formatearRespuesta(false, "Método de solicitud no permitido. Se esperaba POST.");
 }
+
+// Configuración de cabeceras
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Credentials: true");
+
+echo json_encode($respuesta);
 
 ?>
