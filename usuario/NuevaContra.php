@@ -36,7 +36,7 @@ if ($metodo === 'POST') {
                     try {
                         //estructura para enviar el correo desde resend esta en la documentacion de resend
                         $resendResponse = $resend->emails->send([
-                            'from' => 'Camilo <onboarding@resend.dev>',
+                            'from' => 'Subastock <onboarding@resend.dev>',
                             'to' => [$correo],
                             'subject' => 'Cambio de contraseña',
                             'text' => "Hola, se ha generado una nueva contraseña para tu cuenta: $contrasena. Por favor, inicia sesión y cámbiala lo antes posible."
