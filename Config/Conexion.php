@@ -6,10 +6,10 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$servidor ='bgpya0xdu9u1yly2o1zd-mysql.services.clever-cloud.com';
-$usuario = 'utpggc1aogkjxm5e';
-$contrasena = 'VYEI22CEm4gJjydABUdn';
-$nombre_de_base = 'bgpya0xdu9u1yly2o1zd';
+$servidor ='bzfyjbyhezjrrzamnhpi-mysql.services.clever-cloud.com';
+$usuario = 'unlxlukhzvllaze8';
+$contrasena = 'UWD5JGqWqRYkVvp7Nf95';
+$nombre_de_base = 'bzfyjbyhezjrrzamnhpi';
 
 try {
     $base_de_datos = new PDO("mysql:host=$servidor;dbname=$nombre_de_base", $usuario, $contrasena);
